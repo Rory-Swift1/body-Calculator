@@ -1,0 +1,16 @@
+.middle {
+  width: 100%;
+  display: flex;
+}
+.middle-left{
+  height: 60rem;
+  flex:1
+}
+.middle-center{
+  height: 60rem;
+  flex:3
+}
+.middle-right{
+  height: 60rem;
+  flex: 1;
+}

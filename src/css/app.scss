@@ -1,0 +1,39 @@
+body{
+  color: white;
+  background: linear-gradient(to top right,#B293E5,#F590D4,#FF97B2,#FFAE8B,#FFD26E,#F9F871);
+}
+
+// 通过媒体查询来实现响应式布局
+@mixin html-font-size($size:16px) {
+    font-size: $size;
+}
+//手机
+@media screen and (min-width:320px) and (max-width:478px){
+ html {
+   @include html-font-size(5px)
+ }
+}
+//手机横屏和平板
+@media screen and (min-width:480px) and (max-width:718px){
+  html {
+    @include html-font-size(5px)
+  }
+}
+//平板
+@media screen and (min-width:720px) and (max-width:988px){
+  html {
+    @include html-font-size(10px)
+  }
+}
+//电脑
+@media screen and (min-width:990px) and (max-width:1198px){
+  html {
+    @include html-font-size(10px)
+  }
+}
+//大屏
+@media screen and (min-width:1200px){
+  html {
+    @include html-font-size(20px)
+  }
+}
