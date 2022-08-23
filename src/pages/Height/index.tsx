@@ -2,7 +2,6 @@ import { Button, Form, Input, Radio } from 'antd';
 import type { RadioChangeEvent } from 'antd';
 import React, { useState } from 'react';
 import './index.css'
-import MessageCard from '../MessageCard';
 
 const Height = ()=>{
     const App: React.FC = () => {
@@ -69,7 +68,6 @@ const Height = ()=>{
     <div className="Height">
         <App /> 
         <div className='HeightMessage'>
-        <MessageCard />
         </div>
     </div>
     

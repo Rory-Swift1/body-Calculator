@@ -3,8 +3,11 @@ import type { RadioChangeEvent } from 'antd';
 import React, { useState } from 'react';
 import './index.css'
 import MessageCard from '../MessageCard';
+import { requestWeight } from '../../api/http';
 
 const Weight = () => {
+    const [weightdata,setWeightdata]=useState({})
+
     const { Option } = Select;
     const App: React.FC = () => {
 
@@ -16,7 +19,9 @@ const Weight = () => {
           };
 
         const onFinish = (values: any) => {
-            console.log('Success:', values);
+            requestWeight(values).then((res:any)=>{
+            setWeightdata(res)
+           })
         };
 
         const onFinishFailed = (errorInfo: any) => {
@@ -35,7 +40,7 @@ const Weight = () => {
             >
                 <Form.Item 
                    label="Sex"
-                   name="Sex"
+                   name="sex"
                    rules={[{required:true}]}
                 >
                     <Radio.Group  value={value} onChange={onChange}>
@@ -45,7 +50,7 @@ const Weight = () => {
                 </Form.Item>
                 <Form.Item 
                 label="Role"
-                name="Role"
+                name="role"
                 >
                     <Select style={{width:200}}>
                         <Option value='1'>中国</Option>
@@ -55,14 +60,14 @@ const Weight = () => {
                 </Form.Item>
                 <Form.Item
                     label="Height"
-                    name="Height"
+                    name="height"
                     rules={[{ required: true, message: 'Please input your Height!' }]}
                 >
                     <Input style={{width:200}}/>
                 </Form.Item>
                 <Form.Item
                     label="Weight"
-                    name="Weight"
+                    name="weight"
                     rules={[{ required: true, message: 'Please input your Weight!' }]}
                 >
                     <Input style={{width:200}}/>
@@ -80,7 +85,7 @@ const Weight = () => {
         <div className="Weight">
             <App />
         <div className='message'>
-          <MessageCard />
+          <MessageCard data={weightdata} />
         </div>
         </div>
     );
