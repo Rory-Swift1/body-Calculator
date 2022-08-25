@@ -6,22 +6,45 @@ import MessageCard from '../MessageCard';
 import { requestWeight } from '../../api/http';
 
 const Weight = () => {
-    const [weightdata,setWeightdata]=useState({})
-
+    const [sex, setSex] = useState('暂无数据')
+    const [role, setRole] = useState('暂无数据')
+    const [weight, setWeight] = useState('暂无数据')
+    const [height, setHeight] = useState('暂无数据')
+    const [weightdata, setWeightdata] = useState({})
     const { Option } = Select;
     const App: React.FC = () => {
 
-        const [value,setValue] = useState(1);
+        const [value, setValue] = useState(1);
 
         const onChange = (e: RadioChangeEvent) => {
             console.log('radio checked', e.target.value);
             setValue(e.target.value);
-          };
+        };
 
         const onFinish = (values: any) => {
-            requestWeight(values).then((res:any)=>{
-            setWeightdata(res)
-           })
+            if (values.sex === 2) {
+                setSex('女')
+            } else (
+                setSex('男')
+            )
+            switch (values.role) {
+                case '1':
+                    setRole('中国')
+                    break;
+                case '2':
+                    setRole('亚洲')
+                    break;
+                case '3':
+                    setRole('国际')
+                    break;
+                default:
+                    break;
+            }
+            setWeight(values.weight);
+            setHeight(values.height);
+            requestWeight(values).then((res: any) => {
+                setWeightdata(res)
+            })
         };
 
         const onFinishFailed = (errorInfo: any) => {
@@ -29,7 +52,7 @@ const Weight = () => {
         };
 
         return (
-            <Form 
+            <Form
                 name="basic"
                 labelCol={{ span: 8 }}
                 wrapperCol={{ span: 16 }}
@@ -38,21 +61,21 @@ const Weight = () => {
                 onFinishFailed={onFinishFailed}
                 autoComplete="off"
             >
-                <Form.Item 
-                   label="Sex"
-                   name="sex"
-                   rules={[{required:true}]}
+                <Form.Item
+                    label="Sex"
+                    name="sex"
+                    rules={[{ required: true }]}
                 >
-                    <Radio.Group  value={value} onChange={onChange}>
+                    <Radio.Group value={value} onChange={onChange}>
                         <Radio value={1}>男</Radio>
                         <Radio value={2}>女</Radio>
                     </Radio.Group>
                 </Form.Item>
-                <Form.Item 
-                label="Role"
-                name="role"
+                <Form.Item
+                    label="Role"
+                    name="role"
                 >
-                    <Select style={{width:200}}>
+                    <Select style={{ width: 200 }}>
                         <Option value='1'>中国</Option>
                         <Option value="2">亚洲</Option>
                         <Option value="3">国际</Option>
@@ -63,14 +86,14 @@ const Weight = () => {
                     name="height"
                     rules={[{ required: true, message: 'Please input your Height!' }]}
                 >
-                    <Input style={{width:200}}/>
+                    <Input style={{ width: 200 }} />
                 </Form.Item>
                 <Form.Item
                     label="Weight"
                     name="weight"
                     rules={[{ required: true, message: 'Please input your Weight!' }]}
                 >
-                    <Input style={{width:200}}/>
+                    <Input style={{ width: 200 }} />
                 </Form.Item>
                 <Form.Item wrapperCol={{ offset: 8, span: 16 }}>
                     <Button type="primary" htmlType="submit">
@@ -80,13 +103,19 @@ const Weight = () => {
             </Form>
         );
     };
-
     return (
         <div className="Weight">
             <App />
-        <div className='message'>
-          <MessageCard data={weightdata} />
-        </div>
+            <div className='message'>
+                <>
+                    <span>你的信息</span>
+                    <span>性别：{sex}</span>
+                    <span>角色：{role}</span>
+                    <span>身高：{height}</span>
+                    <span>体重：{weight}</span>
+                </>
+                <MessageCard data={weightdata} />
+            </div>
         </div>
     );
 }
